@@ -1,15 +1,13 @@
-
-       name: CI/CD Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
 
-jobs:
+jobs:                      # ← This is required
   deploy-to-vm:
     runs-on: ubuntu-latest
-
     steps:
       - name: Trigger deploy on VM
         uses: appleboy/ssh-action@v0.1.8
@@ -21,6 +19,4 @@ jobs:
             cd ~/myapp
             git reset --hard
             git pull origin main
-            # npm install
-            # pm2 restart app
             echo "Deployment done on VM at $(date)"
