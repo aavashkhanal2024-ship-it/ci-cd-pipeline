@@ -1,0 +1,21 @@
+name: Deploy to VM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Copy SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.GH_ACTION_KEY }}
+
+      - name: Deploy to VM
+        run: ssh vboxuser@172.16.20.96 'cd ~/myapp && ./deploy.sh'
